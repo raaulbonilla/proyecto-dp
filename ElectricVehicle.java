@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.Locale;
+import java.util.Iterator;
 
 //CLASE REALIZADA POR: Alberto Fructos
 
@@ -150,7 +151,10 @@ public class ElectricVehicle {
         boolean primera = true;
 
         if (batteryLevel < energiaNecesaria) {
-            for (ChargingStation st : company.getCityStations()) {
+            List<ChargingStation> stations = company.getCityStations();
+            Iterator<ChargingStation> it = stations.iterator();
+            while (it.hasNext()) {
+                ChargingStation st = it.next();
                 int d1 = location.distance(st.getLocation());
                 int energiaHastaEstacion = d1 * EVDemo.COSTEKM;
 
