@@ -17,6 +17,7 @@ public class EVCompany {
     private String name;
     private ArrayList<ElectricVehicle> suscribedVehicles;
     private ArrayList<ChargingStation> stations;
+    private Map<ChargingStation, LinkedHashSet<ElectricVehicle>> chargingRegistry;
 
     /**
      * Constructor de la clase {@code EVCompany}.
@@ -27,6 +28,7 @@ public class EVCompany {
         this.name = name;
         suscribedVehicles = new ArrayList<ElectricVehicle>();
         stations = new ArrayList<ChargingStation>();
+        chargingRegistry = new TreeMap<>(Comparator.comparing(ChargingStation::getId));
 
     }
 
@@ -60,6 +62,10 @@ public class EVCompany {
      */
     public void addChargingStation(ChargingStation station) {
         stations.add(station);
+    }
+    
+    public void notifyCharging(ChargingStation station, ElectricVehicle vehicle) {
+        chargingRegistry.computeIfAbsent(station, k -> new LinkedHashSet<>()).add(vehicle);
     }
 
     /**

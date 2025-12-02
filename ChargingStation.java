@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Iterator;
 
 //CLASE REALIZADA POR: Raúl Bonilla
 
@@ -11,7 +12,7 @@ import java.util.List;
  * @author DP classes
  * @version 2024.10.07
  */
-public class ChargingStation {
+public class ChargingStation implements Iterable<Charger> {
     private String id;
     private String city;
     private Location location;
@@ -155,5 +156,36 @@ public class ChargingStation {
             }
         }
         return c;
+    }
+    
+    @Override
+    public boolean equals(Object otroObjeto) {
+        boolean esIgual = false;
+
+        if (this == otroObjeto) {
+            esIgual = true;
+        } else {
+            if (otroObjeto != null && getClass() == otroObjeto.getClass()) {
+                ChargingStation otraEstacion = (ChargingStation) otroObjeto;
+    
+                if (id == null) {
+                    esIgual = otraEstacion.id == null;
+                } else {
+                    esIgual = id.equals(otraEstacion.id);
+                }
+            }
+        }
+
+        return esIgual;
+    }
+    
+    @Override
+    public int hashCode() {
+        return id == null ? 0 : id.hashCode();
+    }
+    
+    @Override
+    public Iterator<Charger> iterator() {
+        return chargers.iterator();
     }
 }

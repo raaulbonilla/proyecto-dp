@@ -42,7 +42,7 @@ public class EVDemo
     private List<ChargingStation> stations;
 
     /** Constante que selecciona el escenario de demostración, usando la enumeración {@link DemoType}. */
-    private static final DemoType DEMO=DemoType.ADVANCED;
+    private static final DemoType DEMO=DemoType.SIMPLE;
 
     /** Coste energético de cada desplazamiento expresado en kWh. */
     public static final int COSTEKM = 5;
