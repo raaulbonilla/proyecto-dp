@@ -13,7 +13,7 @@ import java.util.*;
  * @author DP classes
  * @version 2024.10.07
  */
-public class EVCompany {
+public class EVCompany implements Iterable<ElectricVehicle> {
     private String name;
     private ArrayList<ElectricVehicle> suscribedVehicles;
     private ArrayList<ChargingStation> stations;
@@ -123,5 +123,35 @@ public class EVCompany {
         suscribedVehicles.clear();
         stations.clear();
     }
+    
+    @Override
+    public boolean equals(Object otroObjeto) {
+        boolean esIgual = false;
 
+        if (this == otroObjeto) {
+            esIgual = true;
+        } else {
+            if (otroObjeto != null && getClass() == otroObjeto.getClass()) {
+                EVCompany otraEmpresa = (EVCompany) otroObjeto;
+                
+                if (name == null) {
+                    esIgual = otraEmpresa.name == null;
+                } else {
+                    esIgual = name.equals(otraEmpresa.name);
+                }
+            }
+        }
+
+        return esIgual;
+    }
+    
+    @Override
+    public int hashCode() {
+        return name == null ? 0 : name.hashCode();
+    }
+    
+    @Override
+    public Iterator<ElectricVehicle> iterator() {
+        return suscribedVehicles.iterator();
+    }
 }
