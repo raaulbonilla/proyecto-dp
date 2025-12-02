@@ -37,4 +37,4 @@ Descripción:
 (el repositorio de GitHub es el siguiente, para que se pueda ver el
 flujo de trabajo desde dicha herramienta)
 
-https://github.com/raaulbonilla/entregaInicialDP
+https://github.com/raaulbonilla/proyecto-dp
