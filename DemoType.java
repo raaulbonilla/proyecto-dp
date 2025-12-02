@@ -1,35 +1,36 @@
 /**
- * Enumeración que define los escenarios de demostración preconfigurados de la simulación.
- * Cada tipo establece cuántos vehículos, estaciones y cargadores se crearán.
- *
- * @author DP classes
+ * Enumeration that defines the types of pre-configured demonstration scenarios 
+ * for the simulation. Each type specifies the number of vehicles, stations, 
+ * and chargers to be created.
+ * * @author DP classes
  * @version 2025.20.10
  */
 public enum DemoType
 {
-    /** Escenario sencillo: 2 vehículos, 4 estaciones y 4 cargadores por estación. */
-    SIMPLE ("SIMPLE DEMO", 2, 4, 4),
-    /** Escenario medio: 5 vehículos, 4 estaciones y 4 cargadores por estación. */
-    MEDIUM ("MEDIUM DEMO", 5, 4, 4),
-    /** Escenario avanzado: 8 vehículos, 4 estaciones y 4 cargadores por estación. */
-    ADVANCED ("ADVANCED DEMO", 8, 4, 4);
-
-    /** Nombre descriptivo del escenario. */
+    /** Simple scenario: 2 vehicles, 5 stations, 4 chargers per station. */
+    NANO("NANO DEMO", 2, 2, 3),
+    /** Simple scenario: 2 vehicles, 5 stations, 4 chargers per station. */
+    SIMPLE ("SIMPLE DEMO", 4, 5, 4),
+    /** Medium scenario: 5 vehicles, 5 stations, 4 chargers per station. */
+    MEDIUM ("MEDIUM DEMO", 7, 5, 4),
+    /** Advanced scenario: 8 vehicles, 5 stations, 4 chargers per station. */
+    ADVANCED ("ADVANCED DEMO", 10, 5, 4);
+    
+    /** Descriptive name of the scenario. */
     private String name;
-    /** Número de {@link ElectricVehicle} que se generarán. */
+    /** Number of {@link ElectricVehicle}s to create. */
     private int numVehiclesToCreate;
-    /** Número de {@link ChargingStation} que se generarán. */
+    /** Number of {@link ChargingStation}s to create. */
     private int numStationsToCreate;
-    /** Número de {@link Charger} que se crearán por estación. */
+    /** Number of {@link Charger}s to create per station. */
     private int numChargersToCreate;
-
+    
     /**
-     * Constructor de los tipos de demostración.
-     *
-     * @param name Nombre descriptivo.
-     * @param numVehiclesToCreate Número de vehículos.
-     * @param numStationsToCreate Número de estaciones.
-     * @param numChargersToCreate Número de cargadores por estación.
+     * Constructor for the demo types.
+     * @param name Descriptive name.
+     * @param numVehiclesToCreate Number of vehicles.
+     * @param numStationsToCreate Number of stations.
+     * @param numChargersToCreate Number of chargers per station.
      */
     DemoType(String name, int numVehiclesToCreate, int numStationsToCreate, int numChargersToCreate){
         this.name = name;
@@ -37,30 +38,30 @@ public enum DemoType
         this.numStationsToCreate = numStationsToCreate;
         this.numChargersToCreate = numChargersToCreate;
     }
-
+    
     /**
-     * @return El nombre descriptivo de la demostración.
+     * @return The descriptive name of the demo.
      */
     public String getName(){
         return name;
     }
-
+    
     /**
-     * @return La cantidad de vehículos que se crearán en este escenario.
+     * @return The number of vehicles that will be created for this scenario.
      */
     public int getNumVehiclesToCreate(){
         return numVehiclesToCreate;
     }
-
+    
     /**
-     * @return La cantidad de estaciones de recarga previstas en este escenario.
+     * @return The number of charging stations that will be created for this scenario.
      */
     public int getNumStationsToCreate(){
         return numStationsToCreate;
     }
-
+    
     /**
-     * @return El número de cargadores que tendrá cada estación.
+     * @return The number of chargers that will be created in each station.
      */
     public int getNumChargersToCreate(){
         return numChargersToCreate;
