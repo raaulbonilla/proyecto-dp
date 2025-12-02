@@ -17,8 +17,8 @@ public class EVCompany implements Iterable<ElectricVehicle> {
     private String name;
     private ArrayList<ElectricVehicle> suscribedVehicles;
     private ArrayList<ChargingStation> stations;
-    private Map<ChargingStation, LinkedHashSet<ElectricVehicle>> chargingRegistry;
-
+    private Map<Charger, LinkedHashSet<ElectricVehicle>> chargingRegistry;
+    
     /**
      * Constructor de la clase {@code EVCompany}.
      *
@@ -28,7 +28,7 @@ public class EVCompany implements Iterable<ElectricVehicle> {
         this.name = name;
         suscribedVehicles = new ArrayList<ElectricVehicle>();
         stations = new ArrayList<ChargingStation>();
-        chargingRegistry = new TreeMap<>(Comparator.comparing(ChargingStation::getId));
+        chargingRegistry = new TreeMap<>(Comparator.comparing(Charger::getId));
 
     }
 
@@ -64,8 +64,35 @@ public class EVCompany implements Iterable<ElectricVehicle> {
         stations.add(station);
     }
     
-    public void notifyCharging(ChargingStation station, ElectricVehicle vehicle) {
-        chargingRegistry.computeIfAbsent(station, k -> new LinkedHashSet<>()).add(vehicle);
+    public void notifyCharging(Charger charger, ElectricVehicle vehicle) {
+        if (charger != null && vehicle != null) {
+            chargingRegistry.computeIfAbsent(charger, k -> new LinkedHashSet<>()).add(vehicle);
+        }
+    }
+    
+    public List<Charger> getRegisteredChargers() {
+        return Collections.unmodifiableList(new ArrayList<>(chargingRegistry.keySet()));
+    }
+    
+    public List<ElectricVehicle> getRegisteredVehicles(Charger charger) {
+        List<ElectricVehicle> vehicles = Collections.emptyList();
+        LinkedHashSet<ElectricVehicle> registered = chargingRegistry.get(charger);
+
+        if (registered != null) {
+            vehicles = Collections.unmodifiableList(new ArrayList<>(registered));
+        }
+
+        return vehicles;
+    }
+    
+    public Map<Charger, List<ElectricVehicle>> getChargingRegistry() {
+        Map<Charger, List<ElectricVehicle>> copy = new TreeMap<>(Comparator.comparing(Charger::getId));
+        
+        for (Map.Entry<Charger, LinkedHashSet<ElectricVehicle>> entry : chargingRegistry.entrySet()) {
+            copy.put(entry.getKey(), new ArrayList<>(entry.getValue()));
+        }
+        
+        return Collections.unmodifiableMap(copy);
     }
 
     /**
@@ -122,6 +149,7 @@ public class EVCompany implements Iterable<ElectricVehicle> {
     public void reset() {
         suscribedVehicles.clear();
         stations.clear();
+        chargingRegistry.clear();
     }
     
     @Override
