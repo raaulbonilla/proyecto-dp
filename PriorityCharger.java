@@ -15,5 +15,12 @@ public class PriorityCharger extends Charger{
     super(id, speed, fee);
     }
     
+    boolean esCompatible(ElectricVehicle ev){
+        boolean es = false;
+        if(ev.getType() == VehicleTier.PRIORITY){
+            es = true;
+        }
+        return es;
+    }
     
 }

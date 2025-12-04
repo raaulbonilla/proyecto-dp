@@ -11,6 +11,6 @@ public class VtcEV extends ElectricVehicle{
             int batteryCapacity){
             
          super(company, location, targetLocation, name, plate, batteryCapacity);                 
-                          
+         setType(VehicleTier.VTC);                 
     }
 }

@@ -28,6 +28,7 @@ public class ElectricVehicle {
     private Location chargingTarget;
     private boolean arrived;
     private Integer arrivalTurn;
+    private VehicleTier type;
 
     /**
      * Constructor de la clase {@code ElectricVehicle}.
@@ -60,6 +61,13 @@ public class ElectricVehicle {
         this.chargingTarget = null;
         this.arrived = false;
         this.arrivalTurn = null;
+        this.type = null;
+    }
+    public void setType(VehicleTier type){
+        this.type = type;
+    }
+    public VehicleTier getType (){
+        return this.type;
     }
 
     /**

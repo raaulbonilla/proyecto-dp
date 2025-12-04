@@ -18,8 +18,8 @@ public class StandardCharger extends Charger {
     
     boolean esCompatible(ElectricVehicle ev){
         boolean es = false;
-        if(true){
-            
+        if(ev.getType() == VehicleTier.STANDARD || ev.getType() == VehicleTier.VTC){
+            es = true;
         }
         return es;
     }
