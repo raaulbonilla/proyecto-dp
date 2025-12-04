@@ -70,9 +70,9 @@ public class Charger {
      * @param kwsRecharging Cantidad de kWh que se recargan.
      * @return El coste de la operación de recarga.
      */
-    public float recharge(ElectricVehicle vehicle, int kwsRecharging) {
+    public double recharge(ElectricVehicle vehicle, int kwsRecharging) {
         free = false;
-        float cost = kwsRecharging * (float) chargingFee;
+        double cost = kwsRecharging * (double) chargingFee;
         amountCollected += cost;
         addEvRecharged(vehicle);
         free = true;
@@ -160,6 +160,9 @@ public class Charger {
      */
     public double getAmountCollected() {
         return amountCollected;
+    }
+    public void setAmountCollected( double amount){
+        this.amountCollected = amount;
     }
 
     /**

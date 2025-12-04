@@ -58,7 +58,7 @@ public class ChargerTest
         int energyToCharge = 20;
         float expectedCost = energyToCharge * 0.35f;
 
-        float cost = charger.recharge(vehicle, energyToCharge);
+        double cost = charger.recharge(vehicle, energyToCharge);
 
         assertEquals(expectedCost, cost, 0.0001f, "Recharge should return the calculated cost");
         assertEquals(1, charger.getNumerEVRecharged(), "Vehicle must be registered as recharged");

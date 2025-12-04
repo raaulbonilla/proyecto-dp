@@ -316,7 +316,7 @@ public class ElectricVehicle {
             if (cargador != null) {
                 int energiaNecesaria = batteryCapacity - batteryLevel;
                 if (energiaNecesaria > 0) {
-                    float coste = cargador.recharge(this, energiaNecesaria);
+                    double coste = cargador.recharge(this, energiaNecesaria);
                     batteryLevel = batteryCapacity;
                     incrementCharges();
                     kwhCharged = kwhCharged + energiaNecesaria;
@@ -329,7 +329,7 @@ public class ElectricVehicle {
                             plate,
                             energiaNecesaria,
                             cargador.getId(),
-                            (double) coste));
+                            coste));
                 } else {
                     incrementIdleCount();
                     chargingTarget = null;

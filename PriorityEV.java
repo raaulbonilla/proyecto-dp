@@ -13,4 +13,6 @@ public class PriorityEV extends ElectricVehicle{
          super(company, location, targetLocation, name, plate, batteryCapacity);                 
          setType(VehicleTier.PRIORITY);                
     }
+    
+    
 }
