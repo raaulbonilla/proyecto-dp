@@ -27,9 +27,11 @@ public class SolarCharger extends Charger{
     @Override
     public double recharge(ElectricVehicle ev, int kwsRecharging) {
         double cost = 0.0;
+        double costBase = 0.0;
         if(esCompatible(ev)){
-            cost = recharge(ev,kwsRecharging) * 0.9;
-            setAmountCollected(getAmountCollected() + cost);
+            costBase = super.recharge(ev,kwsRecharging);
+            cost = costBase * 0.9;
+            setAmountCollected(getAmountCollected() - (costBase * 0.1));
         }
         return cost;
     }

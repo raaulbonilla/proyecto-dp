@@ -23,4 +23,14 @@ public class PriorityCharger extends Charger{
         return es;
     }
     
+    @Override 
+    public double recharge(ElectricVehicle ev, int kwsRecharging) {
+        double cost = 0.0;
+        if(esCompatible(ev)){
+            cost = super.recharge(ev, kwsRecharging);   
+        }
+        return cost;
+    }
+
+    
 }

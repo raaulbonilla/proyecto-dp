@@ -17,4 +17,17 @@ public class UltraFastCharger extends Charger{
         }
         return es;
     }
+    
+    @Override 
+    public double recharge(ElectricVehicle ev, int kwsRecharging) {
+        double cost = 0.0;
+        double costBase = 0.0;
+        if(esCompatible(ev)){
+            costBase = super.recharge(ev, kwsRecharging);
+            cost = costBase * 1.1;
+            setAmountCollected(getAmountCollected() + (costBase * 0.1));
+        }
+        return cost;
+    }
+
 }
