@@ -444,7 +444,9 @@ public class ElectricVehicle {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("(ElectricVehicle: ")
+        sb.append("(")
+                .append(getClass().getSimpleName())
+                .append(": ")
                 .append(name).append(", ")
                 .append(plate).append(", ")
                 .append(batteryCapacity).append("kwh, ")
