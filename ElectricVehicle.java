@@ -69,6 +69,14 @@ public class ElectricVehicle {
     public VehicleTier getType (){
         return this.type;
     }
+   
+    public EVCompany getCompany() {
+    return company;
+    }
+
+    public void setRechargingLocation(Location location) {
+    this.chargingTarget = location;
+    }
     
     /**
      * @return Identificador del vehículo (matrícula).
