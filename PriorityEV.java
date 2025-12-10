@@ -34,6 +34,7 @@ public class PriorityEV extends ElectricVehicle{
     
     @Override
     public void calculateRoute() {
+        super.calculateRoute();
         EVCompany company = getCompany();
         Location location = getLocation();
         Location targetLocation = getTargetLocation();

@@ -18,6 +18,7 @@ public class PremiumEV extends ElectricVehicle{
     
     @Override
     public void calculateRoute() {
+        super.calculateRoute();
         EVCompany company = getCompany();
         Location location = getLocation();
         Location targetLocation = getTargetLocation();
@@ -85,6 +86,37 @@ public class PremiumEV extends ElectricVehicle{
             setRechargingLocation(mejor.getLocation());
         } else {
             setRechargingLocation(null);
+        }
+    }
+    @Override
+    public void recharge(int step) {
+        int recargasAntes = getChargesCount();
+        super.recharge(step);
+
+        if (getChargesCount() > recargasAntes) {
+            EVCompany company = getCompany();
+            ChargingStation station = company.getChargingStation(getLocation());
+
+            if (station != null) {
+                Charger cargadorSeleccionado = null;
+                Iterator<Charger> it = station.iterator();
+                while (it.hasNext()) {
+                    Charger ch = it.next();
+                    if (ch instanceof UltraFastCharger) {
+                        List<ElectricVehicle> recargados = ch.getRechargedVehicles();
+
+                        if (!recargados.isEmpty()) {
+                            ElectricVehicle ultimo = recargados.get(recargados.size() - 1);
+                            if (ultimo == this && cargadorSeleccionado == null) {
+                                cargadorSeleccionado = ch;
+                            }
+                        }
+                    }
+                }
+                if (cargadorSeleccionado != null) {
+                    company.notifyCharging(cargadorSeleccionado, this);
+                }
+            }
         }
     }
 }
