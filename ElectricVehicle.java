@@ -330,9 +330,7 @@ public class ElectricVehicle {
                     incrementChargesCost(coste);
                     chargingTarget = null;
                     calculateRoute();
-                    if (type == VehicleTier.STANDARD || type == VehicleTier.PREMIUM|| type == VehicleTier.VTC) {
-                    company.notifyCharging(cargador, this);
-                }
+
                     System.out.println(String.format(Locale.US,
                             "(step: %d - ElectricVehicle: %s recharges: %dkwh at charger: %s with cost: %.1f€ ********)",
                             step,

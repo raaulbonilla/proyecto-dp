@@ -14,4 +14,16 @@ public class StandardEv extends ElectricVehicle{
          setType(VehicleTier.STANDARD); 
          
         }
+   
+    
+    @Override
+    public void calculateRoute(){
+        EVCompany comp;
+        Charger ch;
+        super.calculateRoute();
+        if (getType() == VehicleTier.STANDARD) {
+                //comp.notifyCharging(ch, this);
+        }
     }
+    
+}
