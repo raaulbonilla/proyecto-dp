@@ -10,7 +10,6 @@ import java.util.Iterator;
  * @version (a version number or a date)
  */
 public class PriorityCharger extends Charger{
-    
     public PriorityCharger(String id, int speed, double fee) {
     super(id, speed, fee);
     }
