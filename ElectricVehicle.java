@@ -69,7 +69,15 @@ public class ElectricVehicle {
     public VehicleTier getType (){
         return this.type;
     }
+   
+    public EVCompany getCompany() {
+    return company;
+    }
 
+    public void setRechargingLocation(Location location) {
+    this.chargingTarget = location;
+    }
+    
     /**
      * @return Identificador del vehículo (matrícula).
      */
@@ -92,7 +100,6 @@ public class ElectricVehicle {
     public String getPlate() {
         return plate;
     }
-
     /**
      * Actualiza la ubicación actual del vehículo.
      *
@@ -316,20 +323,21 @@ public class ElectricVehicle {
             if (cargador != null) {
                 int energiaNecesaria = batteryCapacity - batteryLevel;
                 if (energiaNecesaria > 0) {
-                    float coste = cargador.recharge(this, energiaNecesaria);
+                    double coste = cargador.recharge(this, energiaNecesaria);
                     batteryLevel = batteryCapacity;
                     incrementCharges();
                     kwhCharged = kwhCharged + energiaNecesaria;
                     incrementChargesCost(coste);
                     chargingTarget = null;
                     calculateRoute();
+
                     System.out.println(String.format(Locale.US,
                             "(step: %d - ElectricVehicle: %s recharges: %dkwh at charger: %s with cost: %.1f€ ********)",
                             step,
                             plate,
                             energiaNecesaria,
                             cargador.getId(),
-                            (double) coste));
+                            coste));
                 } else {
                     incrementIdleCount();
                     chargingTarget = null;
@@ -444,7 +452,9 @@ public class ElectricVehicle {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("(ElectricVehicle: ")
+        sb.append("(")
+                .append(getClass().getSimpleName())
+                .append(": ")
                 .append(name).append(", ")
                 .append(plate).append(", ")
                 .append(batteryCapacity).append("kwh, ")

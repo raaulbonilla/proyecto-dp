@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
 import java.util.Iterator;
+import java.util.*;
 /**
  * Write a description of class SolarCharger here.
  * 
@@ -15,7 +16,7 @@ public class SolarCharger extends Charger{
     super(id, speed, fee);
     }
     
-    boolean esCompatible(ElectricVehicle ev){
+    public boolean esCompatible(ElectricVehicle ev){
         boolean es = false;
         if(ev.getType() == VehicleTier.VTC){
             es = true;
@@ -23,4 +24,15 @@ public class SolarCharger extends Charger{
         return es;
     }
     
+    @Override
+    public double recharge(ElectricVehicle ev, int kwsRecharging) {
+        double cost = 0.0;
+        double costBase = 0.0;
+        if(esCompatible(ev)){
+            costBase = super.recharge(ev,kwsRecharging);
+            cost = costBase * 0.9;
+            setAmountCollected(getAmountCollected() - (costBase * 0.1));
+        }
+        return cost;
+    }
 }
