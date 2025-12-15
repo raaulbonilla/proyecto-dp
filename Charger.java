@@ -15,10 +15,10 @@ import java.util.Iterator;
  * @version 2024.10.07
  */
 public class Charger {
-    private final String id;
+    private String id;
     private double chargingSpeed;
     private double chargingFee;
-    private final List<ElectricVehicle> eVsRecharged;
+    private List<ElectricVehicle> eVsRecharged;
     private double amountCollected;
     private boolean free;
 
@@ -170,5 +170,26 @@ public class Charger {
      */
     public List<ElectricVehicle> getRechargedVehicles() {
         return Collections.unmodifiableList(eVsRecharged);
+    }
+    
+    @Override
+    public boolean equals(Object otroObjeto) {
+        boolean esIgual = false;
+
+        if (this == otroObjeto) {
+            esIgual = true;
+        } else {
+            if (otroObjeto != null && getClass() == otroObjeto.getClass()) {
+                Charger otroCharger = (Charger) otroObjeto;
+    
+                if (id == null) {
+                    esIgual = otroCharger.id == null;
+                } else {
+                    esIgual = id.equals(otroCharger.id);
+                }
+            }
+        }
+
+        return esIgual;
     }
 }
