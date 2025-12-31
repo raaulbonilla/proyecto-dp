@@ -11,11 +11,12 @@ public class UltraFastCharger extends Charger{
     }
     
     public boolean esCompatible (ElectricVehicle ev){
-        boolean es = false;
-        if(ev.getType() == VehicleTier.PREMIUM){
-            es = true;
-        }
-        return es;
+        return isCompatible(ev);
+    }
+
+    @Override
+    public boolean isCompatible(ElectricVehicle ev) {
+        return ev.getType() == VehicleTier.PREMIUM;
     }
     
     @Override 

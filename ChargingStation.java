@@ -137,6 +137,93 @@ public class ChargingStation implements Iterable<Charger> {
      */
     public void addCharger(Charger charger) {
         chargers.add(charger);
+        chargers.sort((ch1, ch2) -> {
+            int speedCompare = Double.compare(ch2.getChargingSpeed(), ch1.getChargingSpeed());
+            if (speedCompare != 0) {
+                return speedCompare;
+            }
+            int feeCompare = Double.compare(ch1.getChargingFee(), ch2.getChargingFee());
+            if (feeCompare != 0) {
+                return feeCompare;
+            }
+            return ch1.getId().compareTo(ch2.getId());
+        });
+    }
+
+    /**
+     * Devuelve el primer cargador compatible con el vehículo indicado.
+     *
+     * @param vehicle Vehículo eléctrico.
+     * @return El primer cargador compatible o {@code null} si no existe.
+     */
+    public Charger getFirstCompatibleCharger(ElectricVehicle vehicle) {
+        Charger compatible = null;
+        Iterator<Charger> it = chargers.iterator();
+        while (it.hasNext() && compatible == null) {
+            Charger ch = it.next();
+            if (ch.isCompatible(vehicle)) {
+                compatible = ch;
+            }
+        }
+        return compatible;
+    }
+
+    /**
+     * Devuelve el primer cargador compatible y libre.
+     *
+     * @param vehicle Vehículo eléctrico.
+     * @return Cargador libre y compatible o {@code null} si no hay disponibles.
+     */
+    public Charger getFirstCompatibleFreeCharger(ElectricVehicle vehicle) {
+        Charger compatible = null;
+        Iterator<Charger> it = chargers.iterator();
+        while (it.hasNext() && compatible == null) {
+            Charger ch = it.next();
+            if (ch.isFree() && ch.isCompatible(vehicle)) {
+                compatible = ch;
+            }
+        }
+        return compatible;
+    }
+
+    /**
+     * Obtiene el cargador compatible con la tarifa más económica.
+     *
+     * @param vehicle Vehículo eléctrico.
+     * @return Cargador compatible más barato o {@code null} si no existe.
+     */
+    public Charger getCheapestCompatibleCharger(ElectricVehicle vehicle) {
+        Charger mejor = null;
+        Iterator<Charger> it = chargers.iterator();
+        while (it.hasNext()) {
+            Charger ch = it.next();
+            if (ch.isCompatible(vehicle)) {
+                if (mejor == null || ch.getChargingFee() < mejor.getChargingFee()) {
+                    mejor = ch;
+                }
+            }
+        }
+        return mejor;
+    }
+
+    /**
+     * Obtiene el cargador compatible con mayor velocidad.
+     *
+     * @param vehicle Vehículo eléctrico.
+     * @return Cargador compatible más rápido o {@code null} si no existe.
+     */
+    public Charger getFastestCompatibleCharger(ElectricVehicle vehicle) {
+        Charger mejor = null;
+        Iterator<Charger> it = chargers.iterator();
+        while (it.hasNext()) {
+            Charger ch = it.next();
+            if (ch.isCompatible(vehicle)) {
+                if (mejor == null || ch.getChargingSpeed() > mejor.getChargingSpeed()) {
+                    mejor = ch;
+                }
+            }
+        }
+        return mejor;
     }
 
     /**

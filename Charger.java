@@ -88,7 +88,8 @@ public class Charger {
     @Override
     public String toString() {
         return String.format(Locale.US,
-            "(Charger: %s, %skwh, %.1f€, %d, %.1f€)",
+            "(%s: %s, %skwh, %.1f€, %d, %.2f€)",
+            getClass().getSimpleName(),
             id,
             formatSpeed(),
             chargingFee,
@@ -170,6 +171,16 @@ public class Charger {
      */
     public List<ElectricVehicle> getRechargedVehicles() {
         return Collections.unmodifiableList(eVsRecharged);
+    }
+
+    /**
+     * Indica si el cargador admite el tipo de vehículo proporcionado.
+     *
+     * @param vehicle Vehículo que desea recargar.
+     * @return {@code true} si es compatible.
+     */
+    public boolean isCompatible(ElectricVehicle vehicle) {
+        return true;
     }
     
     @Override

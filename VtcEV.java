@@ -18,7 +18,6 @@ public class VtcEV extends ElectricVehicle{
   
     @Override
     public void calculateRoute() {
-        super.calculateRoute();
         EVCompany company = getCompany();
         Location location = getLocation();
         Location targetLocation = getTargetLocation();
@@ -47,23 +46,9 @@ public class VtcEV extends ElectricVehicle{
                 boolean esFallback = (d1 == 0 && batteryLevel == batteryCapacity);
 
                 if (llegoAEstacion) {
-                    boolean tieneValido = false;
-                    double mejorTarifaEnEstacion = 0.0;
-
-                    Iterator<Charger> itCh = st.getChargers().iterator();
-                    while (itCh.hasNext()) {
-                        Charger ch = itCh.next();
-                        if (ch instanceof StandardCharger || ch instanceof SolarCharger) {
-                            double tarifa = ch.getChargingFee();
-
-                            if (!tieneValido || tarifa < mejorTarifaEnEstacion) {
-                                mejorTarifaEnEstacion = tarifa;
-                                tieneValido = true;
-                            }
-                        }
-                    }
-
-                    if (tieneValido) {
+                    Charger mejorChargerEnEstacion = st.getCheapestCompatibleCharger(this);
+                    if (mejorChargerEnEstacion != null) {
+                        double mejorTarifaEnEstacion = mejorChargerEnEstacion.getChargingFee();
                         if (esFallback) {
                             if (fallback == null) {
                                 fallback = st;

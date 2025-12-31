@@ -15,11 +15,12 @@ public class PriorityCharger extends Charger{
     }
     
     public boolean esCompatible(ElectricVehicle ev){
-        boolean es = false;
-        if(ev.getType() == VehicleTier.PRIORITY){
-            es = true;
-        }
-        return es;
+        return isCompatible(ev);
+    }
+
+    @Override
+    public boolean isCompatible(ElectricVehicle ev) {
+        return ev.getType() == VehicleTier.PRIORITY;
     }
     
     @Override 

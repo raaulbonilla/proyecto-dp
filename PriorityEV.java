@@ -34,7 +34,6 @@ public class PriorityEV extends ElectricVehicle{
     
     @Override
     public void calculateRoute() {
-        super.calculateRoute();
         EVCompany company = getCompany();
         Location location = getLocation();
         Location targetLocation = getTargetLocation();
@@ -62,18 +61,7 @@ public class PriorityEV extends ElectricVehicle{
                 boolean llegoAEstacion = batteryLevel >= energiaHastaEstacion;
                 boolean esFallback = (d1 == 0 && batteryLevel == batteryCapacity);
 
-                if (llegoAEstacion) {
-                    boolean tienePriority = false;
-                    List<Charger> cargadores = st.getChargers();
-                    Iterator<Charger> itCh = cargadores.iterator();
-                    while (itCh.hasNext() && !tienePriority) {
-                        Charger ch = itCh.next();
-                        if (ch instanceof PriorityCharger) {
-                            tienePriority = true;
-                        }
-                    }
-
-                    if (tienePriority) {
+                if (llegoAEstacion && st.getFirstCompatibleCharger(this) != null) {
                         if (esFallback) {
                             if (fallback == null) {
                                 fallback = st;
@@ -86,7 +74,6 @@ public class PriorityEV extends ElectricVehicle{
                                 primera = false;
                             }
                         }
-                    }
                 }
             }
         }

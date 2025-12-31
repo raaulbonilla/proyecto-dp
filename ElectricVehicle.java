@@ -223,7 +223,7 @@ public class ElectricVehicle {
         String actual = location.getX() + "-" + location.getY();
         String destino = targetLocation.getX() + "-" + targetLocation.getY();
 
-        if (chargingTarget != null && !chargingTarget.equals(actual)) {
+        if (chargingTarget != null && !chargingTarget.equals(location)) {
             String estacion = chargingTarget.getX() + "-" + chargingTarget.getY();
             return "(" + actual + ", " + estacion + ", " + destino + ")";
         } else {
@@ -319,7 +319,7 @@ public class ElectricVehicle {
         ChargingStation estacion = company.getChargingStation(location);
 
         if (estacion != null) {
-            Charger cargador = estacion.getFreeCharger();
+            Charger cargador = estacion.getFirstCompatibleFreeCharger(this);
             if (cargador != null) {
                 int energiaNecesaria = batteryCapacity - batteryLevel;
                 if (energiaNecesaria > 0) {
@@ -332,10 +332,12 @@ public class ElectricVehicle {
                     calculateRoute();
 
                     System.out.println(String.format(Locale.US,
-                            "(step: %d - ElectricVehicle: %s recharges: %dkwh at charger: %s with cost: %.1f€ ********)",
+                            "(step: %d - %s: %s recharges: %dkwh at %s: %s with cost: %.2f€ ********)",
                             step,
+                            getClass().getSimpleName(),
                             plate,
                             energiaNecesaria,
+                            cargador.getClass().getSimpleName(),
                             cargador.getId(),
                             coste));
                 } else {
@@ -382,8 +384,9 @@ public class ElectricVehicle {
                 }
                 System.out.println(String.format(
                         Locale.US,
-                        "(step: %d - ElectricVehicle: %s at target destination ********)",
+                        "(step: %d - %s: %s at target destination ********)",
                         step,
+                        getClass().getSimpleName(),
                         plate));
             }
         } else {
@@ -460,7 +463,7 @@ public class ElectricVehicle {
                 .append(batteryCapacity).append("kwh, ")
                 .append(batteryLevel).append("kwh, ")
                 .append(chargesCount).append(", ")
-                .append(String.format(Locale.US, "%.1f€", chargesCost)).append(", ")
+                .append(String.format(Locale.US, "%.2f€", chargesCost)).append(", ")
                 .append(idleCount).append(", ")
                 .append(location);
 
