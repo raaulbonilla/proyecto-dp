@@ -6,7 +6,7 @@ import java.util.List;
  * @author (your name) 
  * @version (a version number or a date)
  */
-public class StandardEv extends ElectricVehicle{
+public class StandardEv extends ElectricVehicle {
     
     public StandardEv(EVCompany company, Location location, Location targetLocation, String name, String plate,
             int batteryCapacity){
@@ -14,7 +14,7 @@ public class StandardEv extends ElectricVehicle{
          super(company, location, targetLocation, name, plate, batteryCapacity);                 
          setType(VehicleTier.STANDARD); 
          
-        }
+    }
    @Override
     public void recharge(int step) {
         int recargasAntes = getChargesCount();

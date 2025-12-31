@@ -103,28 +103,22 @@ public class ChargerTest
     
     @Test
     public void testCompatible() {
-        assertAll("Compatibilidad por tipo de cargador",
-
-            () -> assertTrue(standardCharger.esCompatible(standardEV), "StandardCharger debe aceptar STANDARD"),
-            () -> assertTrue(standardCharger.esCompatible(vtcEV),      "StandardCharger debe aceptar VTC"),
-            () -> assertFalse(standardCharger.esCompatible(priorityEV), "StandardCharger NO debe aceptar PRIORITY"),
-            () -> assertFalse(standardCharger.esCompatible(premiumEV),  "StandardCharger NO debe aceptar PREMIUM"),
-
-            () -> assertTrue(solarCharger.esCompatible(vtcEV),          "SolarCharger debe aceptar VTC"),
-            () -> assertFalse(solarCharger.esCompatible(standardEV),    "SolarCharger NO debe aceptar STANDARD"),
-            () -> assertFalse(solarCharger.esCompatible(priorityEV),    "SolarCharger NO debe aceptar PRIORITY"),
-            () -> assertFalse(solarCharger.esCompatible(premiumEV),     "SolarCharger NO debe aceptar PREMIUM"),
-
-            () -> assertTrue(priorityCharger.esCompatible(priorityEV),  "PriorityCharger debe aceptar PRIORITY"),
-            () -> assertFalse(priorityCharger.esCompatible(standardEV), "PriorityCharger NO debe aceptar STANDARD"),
-            () -> assertFalse(priorityCharger.esCompatible(vtcEV),      "PriorityCharger NO debe aceptar VTC"),
-            () -> assertFalse(priorityCharger.esCompatible(premiumEV),  "PriorityCharger NO debe aceptar PREMIUM"),
-
-            () -> assertTrue(ultraFastCharger.esCompatible(premiumEV),  "UltraFastCharger debe aceptar PREMIUM"),
-            () -> assertFalse(ultraFastCharger.esCompatible(standardEV),"UltraFastCharger NO debe aceptar STANDARD"),
-            () -> assertFalse(ultraFastCharger.esCompatible(vtcEV),     "UltraFastCharger NO debe aceptar VTC"),
-            () -> assertFalse(ultraFastCharger.esCompatible(priorityEV),"UltraFastCharger NO debe aceptar PRIORITY")
-        );
+        assertTrue(standardCharger.esCompatible(standardEV), "StandardCharger debe aceptar STANDARD");
+        assertTrue(standardCharger.esCompatible(vtcEV), "StandardCharger debe aceptar VTC");
+        assertFalse(standardCharger.esCompatible(priorityEV), "StandardCharger NO debe aceptar PRIORITY");
+        assertFalse(standardCharger.esCompatible(premiumEV), "StandardCharger NO debe aceptar PREMIUM");
+        assertTrue(solarCharger.esCompatible(vtcEV), "SolarCharger debe aceptar VTC");
+        assertFalse(solarCharger.esCompatible(standardEV), "SolarCharger NO debe aceptar STANDARD");
+        assertFalse(solarCharger.esCompatible(priorityEV), "SolarCharger NO debe aceptar PRIORITY");
+        assertFalse(solarCharger.esCompatible(premiumEV), "SolarCharger NO debe aceptar PREMIUM");
+        assertTrue(priorityCharger.esCompatible(priorityEV), "PriorityCharger debe aceptar PRIORITY");
+        assertFalse(priorityCharger.esCompatible(standardEV), "PriorityCharger NO debe aceptar STANDARD");
+        assertFalse(priorityCharger.esCompatible(vtcEV), "PriorityCharger NO debe aceptar VTC");
+        assertFalse(priorityCharger.esCompatible(premiumEV), "PriorityCharger NO debe aceptar PREMIUM");
+        assertTrue(ultraFastCharger.esCompatible(premiumEV), "UltraFastCharger debe aceptar PREMIUM");
+        assertFalse(ultraFastCharger.esCompatible(standardEV), "UltraFastCharger NO debe aceptar STANDARD");
+        assertFalse(ultraFastCharger.esCompatible(vtcEV), "UltraFastCharger NO debe aceptar VTC");
+        assertFalse(ultraFastCharger.esCompatible(priorityEV), "UltraFastCharger NO debe aceptar PRIORITY");
     }
     
     @Test
