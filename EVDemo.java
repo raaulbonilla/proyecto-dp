@@ -248,7 +248,7 @@ public class EVDemo
      *
      * @param args Argumentos de entrada (no se utilizan).
      */
-    public static void main(String[] args) {
+    public static void main() {
         EVDemo demo = new EVDemo();
         demo.reset();
     }
