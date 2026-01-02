@@ -18,7 +18,7 @@ public class ChargerTest
     private Location start;
     private Location destination;
 
-    private StandardEv standardEV;
+    private StandardEV standardEV;
     private VtcEV vtcEV;
     private PriorityEV priorityEV;
     private PremiumEV premiumEV;
@@ -49,7 +49,7 @@ public class ChargerTest
         vehicle = new ElectricVehicle(company, start, destination, "Model S", "EV-123", 100);
         charger = new Charger("CH-01", 50, 0.35);
         
-        standardEV = new StandardEv(company, start, destination, "Std", "STD-1", 100);
+        standardEV = new StandardEV(company, start, destination, "Std", "STD-1", 100);
         vtcEV = new VtcEV(company, start, destination, "VTC", "VTC-1", 100);
         priorityEV = new PriorityEV(company, start, destination, "Pri", "PRI-1", 100);
         premiumEV = new PremiumEV(company, start, destination, "Pre", "PRE-1", 100);

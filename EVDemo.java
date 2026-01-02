@@ -67,7 +67,7 @@ public class EVDemo
             } else if (VehicleTier.values()[module] == VehicleTier.PREMIUM) {
                 ev = new PremiumEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
             } else {
-                ev = new StandardEv(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
+                ev = new StandardEV(company, locations[i], targetLocations[i], ("EV"+i), (i+"CCC"), (i+1)*(20-i));
             }
             vehicles.add(ev);
         }
