@@ -63,6 +63,36 @@ public class Charger {
     }
 
     /**
+     * Indica si este cargador es compatible con el vehículo recibido.
+     *
+     * @param vehicle Vehículo a comprobar.
+     * @return {@code true} si el cargador acepta el vehículo.
+     */
+    public boolean isCompatible(ElectricVehicle vehicle) {
+        return true;
+    }
+
+    /**
+     * Alias mantenido para las pruebas existentes.
+     *
+     * @param ev Vehículo eléctrico.
+     * @return {@code true} si es compatible.
+     */
+    public boolean esCompatible(ElectricVehicle ev) {
+        return isCompatible(ev);
+    }
+
+    /**
+     * Calcula el coste base de la recarga según los kWh suministrados.
+     *
+     * @param kwsRecharging kWh recargados.
+     * @return Coste de la operación.
+     */
+    protected double calculateCost(int kwsRecharging) {
+        return kwsRecharging * chargingFee;
+    }
+
+    /**
      * Simula el proceso de recarga de un {@link ElectricVehicle}.
      * Aumenta la cantidad recaudada y registra el vehículo como recargado.
      *
@@ -71,8 +101,11 @@ public class Charger {
      * @return El coste de la operación de recarga.
      */
     public double recharge(ElectricVehicle vehicle, int kwsRecharging) {
+        if (!isCompatible(vehicle)) {
+            return 0.0;
+        }
         free = false;
-        double cost = kwsRecharging * (double) chargingFee;
+        double cost = calculateCost(kwsRecharging);
         amountCollected += cost;
         addEvRecharged(vehicle);
         free = true;
@@ -88,7 +121,8 @@ public class Charger {
     @Override
     public String toString() {
         return String.format(Locale.US,
-            "(Charger: %s, %skwh, %.1f€, %d, %.1f€)",
+            "(%s: %s, %skwh, %.1f€, %d, %.2f€)",
+            getClass().getSimpleName(),
             id,
             formatSpeed(),
             chargingFee,

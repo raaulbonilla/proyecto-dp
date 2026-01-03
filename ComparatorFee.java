@@ -19,9 +19,9 @@ public class ComparatorFee implements Comparator<Charger>
      *         o positivo si su tarifa es inferior.
      */
     public int compare(Charger c1 , Charger c2){
-        if (c1.getChargingFee() > c2.getChargingFee())
+        if (c1.getChargingFee() < c2.getChargingFee())
             return -1;
-        else if (c1.getChargingFee() < c2.getChargingFee())
+        else if (c1.getChargingFee() > c2.getChargingFee())
             return 1;
         else {
             return 0;

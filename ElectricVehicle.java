@@ -223,7 +223,7 @@ public class ElectricVehicle {
         String actual = location.getX() + "-" + location.getY();
         String destino = targetLocation.getX() + "-" + targetLocation.getY();
 
-        if (chargingTarget != null && !chargingTarget.equals(actual)) {
+        if (chargingTarget != null && !chargingTarget.equals(location)) {
             String estacion = chargingTarget.getX() + "-" + chargingTarget.getY();
             return "(" + actual + ", " + estacion + ", " + destino + ")";
         } else {
@@ -319,25 +319,32 @@ public class ElectricVehicle {
         ChargingStation estacion = company.getChargingStation(location);
 
         if (estacion != null) {
-            Charger cargador = estacion.getFreeCharger();
+            // Usa el selector para permitir criterios específicos por subclase.
+            Charger cargador = selectChargerForRecharge(estacion);
             if (cargador != null) {
                 int energiaNecesaria = batteryCapacity - batteryLevel;
                 if (energiaNecesaria > 0) {
                     double coste = cargador.recharge(this, energiaNecesaria);
-                    batteryLevel = batteryCapacity;
-                    incrementCharges();
-                    kwhCharged = kwhCharged + energiaNecesaria;
-                    incrementChargesCost(coste);
-                    chargingTarget = null;
-                    calculateRoute();
+                    if (coste > 0) {
+                        batteryLevel = batteryCapacity;
+                        incrementCharges();
+                        kwhCharged = kwhCharged + energiaNecesaria;
+                        incrementChargesCost(coste);
+                        chargingTarget = null;
+                        calculateRoute();
 
-                    System.out.println(String.format(Locale.US,
-                            "(step: %d - ElectricVehicle: %s recharges: %dkwh at charger: %s with cost: %.1f€ ********)",
-                            step,
-                            plate,
-                            energiaNecesaria,
-                            cargador.getId(),
-                            coste));
+                        System.out.println(String.format(Locale.US,
+                                "(step: %d - %s: %s recharges: %dkwh at %s: %s with cost: %.2f€ ********)",
+                                step,
+                                getClass().getSimpleName(),
+                                plate,
+                                energiaNecesaria,
+                                cargador.getClass().getSimpleName(),
+                                cargador.getId(),
+                                coste));
+                    } else {
+                        incrementIdleCount();
+                    }
                 } else {
                     incrementIdleCount();
                     chargingTarget = null;
@@ -348,14 +355,25 @@ public class ElectricVehicle {
             }
         }
     }
+    
+    /**
+     * Selecciona el cargador a utilizar dentro de una estación.
+     * Se puede sobrescribir en subclases para aplicar criterios específicos.
+     *
+     * @param estacion Estación donde recargar.
+     * @return Cargador elegido o {@code null} si no hay compatible libre.
+     */
+    protected Charger selectChargerForRecharge(ChargingStation estacion) {
+        return estacion.getFirstCompatibleCharger(this);
+    }
 
     /**
      * Incrementa el contador de recargas realizadas por el vehículo.
      */
     public void incrementCharges() {
         chargesCount = chargesCount + 1;
-    }
-
+    }    
+    
     /**
      * Añade un importe al coste total acumulado de recargas.
      *
@@ -382,8 +400,9 @@ public class ElectricVehicle {
                 }
                 System.out.println(String.format(
                         Locale.US,
-                        "(step: %d - ElectricVehicle: %s at target destination ********)",
+                        "(step: %d - %s: %s at target destination ********)",
                         step,
+                        getClass().getSimpleName(),
                         plate));
             }
         } else {
