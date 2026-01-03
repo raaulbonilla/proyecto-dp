@@ -479,7 +479,7 @@ public class ElectricVehicle {
                 .append(batteryCapacity).append("kwh, ")
                 .append(batteryLevel).append("kwh, ")
                 .append(chargesCount).append(", ")
-                .append(String.format(Locale.US, "%.1f€", chargesCost)).append(", ")
+                .append(String.format(Locale.US, "%.2f€", chargesCost)).append(", ")
                 .append(idleCount).append(", ")
                 .append(location);
 
