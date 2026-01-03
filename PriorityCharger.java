@@ -1,8 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Iterator;
 /**
  * Write a description of class PriorityCharger here.
  * 
@@ -14,22 +9,14 @@ public class PriorityCharger extends Charger{
     super(id, speed, fee);
     }
     
-    public boolean esCompatible(ElectricVehicle ev){
-        boolean es = false;
-        if(ev.getType() == VehicleTier.PRIORITY){
-            es = true;
-        }
-        return es;
-    }
-    
-    @Override 
-    public double recharge(ElectricVehicle ev, int kwsRecharging) {
-        double cost = 0.0;
-        if(esCompatible(ev)){
-            cost = super.recharge(ev, kwsRecharging);   
-        }
-        return cost;
+    @Override
+    public boolean isCompatible(ElectricVehicle ev){
+        return ev.getType() == VehicleTier.PRIORITY;
     }
 
+    @Override
+    public boolean esCompatible(ElectricVehicle ev) {
+        return isCompatible(ev);
+    }
     
 }
