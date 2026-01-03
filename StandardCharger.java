@@ -1,9 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Locale;
-import java.util.Iterator;
-
 /**
  * Write a description of class StandardCharger here.
  * 
@@ -16,20 +10,13 @@ public class StandardCharger extends Charger {
         
     }
     
-    public boolean esCompatible(ElectricVehicle ev){
-        boolean es = false;
-        if(ev.getType() == VehicleTier.STANDARD || ev.getType() == VehicleTier.VTC){
-            es = true;
-        }
-        return es;
+    @Override
+    public boolean isCompatible(ElectricVehicle ev){
+        return ev.getType() == VehicleTier.STANDARD || ev.getType() == VehicleTier.VTC;
     }
     
     @Override 
-    public double recharge(ElectricVehicle ev, int kwsRecharging) {
-        double cost = 0.0;
-        if(esCompatible(ev)){
-            cost = super.recharge(ev, kwsRecharging);
-        }
-        return cost;
+    public boolean esCompatible(ElectricVehicle ev) {
+        return isCompatible(ev);
     }
 }
