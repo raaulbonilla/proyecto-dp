@@ -11,6 +11,9 @@
 | Raúl Bonilla        |
 | Alberto Fructos     |
 
+Todas las supervisiones y errores del proyecto
+han sido realizadas por Raúl Bonilla
+
 
 2. CLASE PRINCIPAL PARA EJECUTAR LA SIMULACIÓN
 ----------------------------------------------
