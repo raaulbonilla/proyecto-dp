@@ -47,31 +47,17 @@ public class VtcEV extends ElectricVehicle{
                 boolean esFallback = (d1 == 0 && batteryLevel == batteryCapacity);
 
                 if (llegoAEstacion) {
-                    boolean tieneValido = false;
-                    double mejorTarifaEnEstacion = 0.0;
-
-                    Iterator<Charger> itCh = st.getChargers().iterator();
-                    while (itCh.hasNext()) {
-                        Charger ch = itCh.next();
-                        if (ch instanceof StandardCharger || ch instanceof SolarCharger) {
-                            double tarifa = ch.getChargingFee();
-
-                            if (!tieneValido || tarifa < mejorTarifaEnEstacion) {
-                                mejorTarifaEnEstacion = tarifa;
-                                tieneValido = true;
-                            }
-                        }
-                    }
-
-                    if (tieneValido) {
+                    Charger mejorEnEstacion = st.getCheapestCompatibleCharger(this);
+                    if (mejorEnEstacion != null) {
                         if (esFallback) {
                             if (fallback == null) {
                                 fallback = st;
                             }
                         } else {
-                            if (primera || mejorTarifaEnEstacion < mejorTarifa) {
+                            double tarifa = mejorEnEstacion.getChargingFee();
+                            if (primera || tarifa < mejorTarifa) {
                                 mejor = st;
-                                mejorTarifa = mejorTarifaEnEstacion;
+                                mejorTarifa = tarifa;
                                 primera = false;
                             }
                         }
@@ -90,6 +76,7 @@ public class VtcEV extends ElectricVehicle{
             setRechargingLocation(null);
         }
     }
+    
     @Override
     public void recharge(int step) {
         int recargasAntes = getChargesCount();
@@ -120,5 +107,22 @@ public class VtcEV extends ElectricVehicle{
                 }
             }
         }
+    }
+
+    @Override
+    protected Charger selectChargerForRecharge(ChargingStation estacion) {
+        Charger best = null;
+        double bestFee = Double.MAX_VALUE;
+
+        for (Charger ch : estacion.getChargers()) {
+            if (ch.isFree() && ch.isCompatible(this)) {
+                double fee = ch.getChargingFee();
+                if (fee < bestFee) {
+                    best = ch;
+                    bestFee = fee;
+                }
+            }
+        }
+        return best;
     }
 }
