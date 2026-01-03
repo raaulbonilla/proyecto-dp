@@ -8,7 +8,6 @@ import java.util.Iterator;
  * @version (a version number or a date)
  */
 public class VtcEV extends ElectricVehicle{
-    
     public VtcEV(EVCompany company, Location location, Location targetLocation, String name, String plate,
             int batteryCapacity){
             

@@ -5,7 +5,6 @@
  * @version (a version number or a date)
  */
 public class SolarCharger extends Charger{
-    
     public SolarCharger(String id, int speed, double fee) {
     super(id, speed, fee);
     }

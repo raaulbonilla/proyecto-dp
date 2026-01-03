@@ -63,9 +63,11 @@ public class ElectricVehicle {
         this.arrivalTurn = null;
         this.type = null;
     }
+    
     public void setType(VehicleTier type){
         this.type = type;
     }
+    
     public VehicleTier getType (){
         return this.type;
     }
@@ -100,6 +102,7 @@ public class ElectricVehicle {
     public String getPlate() {
         return plate;
     }
+    
     /**
      * Actualiza la ubicación actual del vehículo.
      *
@@ -319,7 +322,7 @@ public class ElectricVehicle {
         ChargingStation estacion = company.getChargingStation(location);
 
         if (estacion != null) {
-            // Usa el selector para permitir criterios específicos por subclase.
+            //usa el selector para permitir criterios específicos por subclase
             Charger cargador = selectChargerForRecharge(estacion);
             if (cargador != null) {
                 int energiaNecesaria = batteryCapacity - batteryLevel;

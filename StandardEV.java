@@ -7,18 +7,15 @@ import java.util.List;
  * @version (a version number or a date)
  */
 public class StandardEV extends ElectricVehicle {
-    
-    public StandardEV(EVCompany company, Location location, Location targetLocation, String name, String plate,
+   public StandardEV(EVCompany company, Location location, Location targetLocation, String name, String plate,
             int batteryCapacity) {
             
          super(company, location, targetLocation, name, plate, batteryCapacity);                 
          setType(VehicleTier.STANDARD); 
          
-    }
+   }
 
-    
-
-    @Override
+   @Override
     public void calculateRoute() {
         EVCompany company = getCompany();
         Location location = getLocation();
@@ -73,7 +70,7 @@ public class StandardEV extends ElectricVehicle {
         } else {
             setRechargingLocation(null);
         }
-    }
+   }
     
    @Override
     public void recharge(int step) {

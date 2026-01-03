@@ -23,5 +23,4 @@ public class UltraFastCharger extends Charger{
     public boolean esCompatible(ElectricVehicle ev) {
         return isCompatible(ev);
     }
-
 }

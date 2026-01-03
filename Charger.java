@@ -195,6 +195,7 @@ public class Charger {
     public double getAmountCollected() {
         return amountCollected;
     }
+    
     public void setAmountCollected( double amount){
         this.amountCollected = amount;
     }

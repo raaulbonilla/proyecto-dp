@@ -18,5 +18,4 @@ public class PriorityCharger extends Charger{
     public boolean esCompatible(ElectricVehicle ev) {
         return isCompatible(ev);
     }
-    
 }
