@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Iterator;
+import java.util.Comparator;
 
 //CLASE REALIZADA POR: Raúl Bonilla
 
@@ -17,6 +18,20 @@ public class ChargingStation implements Iterable<Charger> {
     private String city;
     private Location location;
     private List<Charger> chargers;
+    private static final Comparator<Charger> CHARGER_ORDER = new Comparator<Charger>() {
+        @Override //incluido con chatGPT
+        public int compare(Charger c1, Charger c2) {
+            int speedCompare = Double.compare(c2.getChargingSpeed(), c1.getChargingSpeed());
+            if (speedCompare != 0) {
+                return speedCompare;
+            }
+            int feeCompare = Double.compare(c1.getChargingFee(), c2.getChargingFee());
+            if (feeCompare != 0) {
+                return feeCompare;
+            }
+            return c1.getId().compareTo(c2.getId());
+        }
+    };
 
     /**
      * Constructor de la clase {@code ChargingStation}.
@@ -83,6 +98,99 @@ public class ChargingStation implements Iterable<Charger> {
     }
 
     /**
+     * Recupera el primer cargador libre y compatible con el vehículo indicado.
+     *
+     * @param vehicle Vehículo eléctrico a recargar.
+     * @return Cargador libre y compatible o {@code null} si no hay disponibles.
+     */
+    public Charger getFirstCompatibleCharger(ElectricVehicle vehicle) {
+        Charger compatible = null;
+        
+        int i = 0;
+        boolean enc = false;
+        
+        while (i < chargers.size() && !enc) {
+            Charger ch = chargers.get(i);
+            if (ch.isFree() && ch.isCompatible(vehicle)) {
+                compatible = ch;
+                enc = true;
+            }
+            i++;
+        }
+        return compatible;
+    }
+    
+    /**
+     * Indica si la estación dispone de al menos un cargador compatible con el vehículo.
+     *
+     * @param vehicle Vehículo eléctrico a comprobar.
+     * @return {@code true} si existe algún cargador compatible.
+     */
+    public boolean hasCompatibleCharger(ElectricVehicle vehicle) {
+        boolean enc = false;
+        int i = 0;
+        
+        while (i < chargers.size() && !enc) {
+            Charger ch = chargers.get(i);
+            if (ch.isCompatible(vehicle)) {
+                enc = true;
+            }
+            i++;
+        }
+        return enc;
+    }
+    
+    /**
+     * Devuelve el cargador compatible con menor tarifa dentro de la estación.
+     *
+     * @param vehicle Vehículo a considerar.
+     * @return Cargador compatible más barato o {@code null} si no existe.
+     */
+    public Charger getCheapestCompatibleCharger(ElectricVehicle vehicle) {
+        Charger mejor = null;
+        
+        double mejorFee = 0.0;
+        boolean primero = true;
+        
+        for (Charger ch : chargers) {
+            if (ch.isCompatible(vehicle)) {
+                double fee = ch.getChargingFee();
+                if (primero || fee < mejorFee) {
+                    mejor = ch;
+                    mejorFee = fee;
+                    primero = false;
+                }
+            }
+        }
+        return mejor;
+    }
+    
+    /**
+     * Devuelve el cargador compatible más rápido dentro de la estación.
+     *
+     * @param vehicle Vehículo a considerar.
+     * @return Cargador compatible más rápido o {@code null} si no existe.
+     */
+    public Charger getFastestCompatibleCharger(ElectricVehicle vehicle) {
+        Charger mejor = null;
+        
+        double mejorVelocidad = 0.0;
+        boolean primero = true;
+        
+        for (Charger ch : chargers) {
+            if (ch.isCompatible(vehicle)) {
+                double speed = ch.getChargingSpeed();
+                if (primero || speed > mejorVelocidad) {
+                    mejor = ch;
+                    mejorVelocidad = speed;
+                    primero = false;
+                }
+            }
+        }
+        return mejor;
+    }
+    
+    /**
      * Establece la ubicación actual de la estación de carga.
      *
      * @param location Nueva {@link Location}. No debe ser {@code null}.
@@ -137,6 +245,7 @@ public class ChargingStation implements Iterable<Charger> {
      */
     public void addCharger(Charger charger) {
         chargers.add(charger);
+        Collections.sort(chargers, CHARGER_ORDER);
     }
 
     /**
