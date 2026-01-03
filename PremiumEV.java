@@ -47,29 +47,17 @@ public class PremiumEV extends ElectricVehicle{
                 boolean esFallback = (d1 == 0 && batteryLevel == batteryCapacity);
 
                 if (llegoAEstacion) {
-                    boolean tieneUltraFast = false;
-                    double mejorVelocidadEnEstacion = 0.0;
-                    Iterator<Charger> itCh = st.getChargers().iterator();
-                    while (itCh.hasNext()) {
-                        Charger ch = itCh.next();
-                        if (ch instanceof UltraFastCharger) {
-                            double velocidad = ch.getChargingSpeed();
-
-                            if (!tieneUltraFast || velocidad > mejorVelocidadEnEstacion) {
-                                mejorVelocidadEnEstacion = velocidad;
-                                tieneUltraFast = true;
-                            }
-                        }
-                    }
-                    if (tieneUltraFast) {
+                    Charger mejorEnEstacion = st.getFastestCompatibleCharger(this);
+                    if (mejorEnEstacion != null) {
                         if (esFallback) {
                             if (fallback == null) {
                                 fallback = st;
                             }
                         } else {
-                            if (primera || mejorVelocidadEnEstacion > mejorVelocidad) {
+                            double velocidad = mejorEnEstacion.getChargingSpeed();
+                            if (primera || velocidad > mejorVelocidad) {
                                 mejor = st;
-                                mejorVelocidad = mejorVelocidadEnEstacion;
+                                mejorVelocidad = velocidad;
                                 primera = false;
                             }
                         }
@@ -88,6 +76,7 @@ public class PremiumEV extends ElectricVehicle{
             setRechargingLocation(null);
         }
     }
+    
     @Override
     public void recharge(int step) {
         int recargasAntes = getChargesCount();
@@ -118,6 +107,23 @@ public class PremiumEV extends ElectricVehicle{
                 }
             }
         }
+    }
+    
+    @Override
+    protected Charger selectChargerForRecharge(ChargingStation estacion) {
+        Charger best = null;
+        double bestSpeed = -1.0;
+
+        for (Charger ch : estacion.getChargers()) {
+            if (ch.isFree() && ch.isCompatible(this)) {
+                double speed = ch.getChargingSpeed();
+                if (speed > bestSpeed) {
+                    best = ch;
+                    bestSpeed = speed;
+                }
+            }
+        }
+        return best;
     }
 }
    
