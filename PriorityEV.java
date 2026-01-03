@@ -15,19 +15,18 @@ public class PriorityEV extends ElectricVehicle{
          super(company, location, targetLocation, name, plate, batteryCapacity);                 
          setType(VehicleTier.PRIORITY);                
     }
+    
     @Override
     public void act(int step) {
-        boolean teniaRechargingAntes;
-        boolean hayRechargingDespues;
-        boolean haLlegadoDestinoFinal;
-        boolean haLlegadoAEstacion;
-        
-        teniaRechargingAntes = hasRechargingLocation();
+        int recargasAntes = getChargesCount();
         super.act(step);
-        haLlegadoDestinoFinal = getArrivingStep() != -1;
-        hayRechargingDespues = hasRechargingLocation();
-        haLlegadoAEstacion = teniaRechargingAntes && !hayRechargingDespues;
-        if (!haLlegadoDestinoFinal && !haLlegadoAEstacion) {
+
+        boolean llegoDestino = getArrivingStep() != -1;
+        boolean recargo = getChargesCount() > recargasAntes;
+        boolean enEstacion = getRechargingLocation() != null
+                && getLocation().equals(getRechargingLocation());
+
+        if (!llegoDestino && !recargo && !enEstacion) {
             super.act(step);
         }
     }
@@ -63,15 +62,7 @@ public class PriorityEV extends ElectricVehicle{
                 boolean esFallback = (d1 == 0 && batteryLevel == batteryCapacity);
 
                 if (llegoAEstacion) {
-                    boolean tienePriority = false;
-                    List<Charger> cargadores = st.getChargers();
-                    Iterator<Charger> itCh = cargadores.iterator();
-                    while (itCh.hasNext() && !tienePriority) {
-                        Charger ch = itCh.next();
-                        if (ch instanceof PriorityCharger) {
-                            tienePriority = true;
-                        }
-                    }
+                    boolean tienePriority = st.hasCompatibleCharger(this);
 
                     if (tienePriority) {
                         if (esFallback) {
