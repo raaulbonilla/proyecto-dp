@@ -30,14 +30,6 @@ Descripción:
     establecido en la misma clase (SIMPLE, MEDIUM o ADVANCED).
 
 
-3. EXTRAS IMPLEMENTADOS EN EL PROYECTO
+3. Repositorio de GitHub
 ----------------------------------------------
-• Extra 1: Uso correcto de la funcionalidad ofrecida por las Colecciones
-           y los Comparadores.
-• Extra 2: Pruebas unitarias del proyecto con JUnit. 
-• Extra 3: Uso de la funcionalidad de Git proporcionada por BlueJ.
-
-(el repositorio de GitHub es el siguiente, para que se pueda ver el
-flujo de trabajo desde dicha herramienta)
-
 https://github.com/raaulbonilla/proyecto-dp
